@@ -17,11 +17,11 @@ public class buggedClient {
         final int INDEX = 459313;
         int x = 1;
         int y = 0;
-        int z = 45;
+        int z = 0;
         int numberOfDomino = 0;
         
-        String ip_address = "localhost";
-        int port = 6868;
+        String ip_address = "grasieci.adiantek.ovh";
+        int port = 8081;
         
         boolean connection = false;
         String msgFromServer;
@@ -65,7 +65,7 @@ public class buggedClient {
                                 outToServer.flush();
                                 x += 1;
                                 y += 1;
-                                z += 45;
+                                z += 90;
                             }
                         }
                         else if(msgFromServer.startsWith("GAME")){
