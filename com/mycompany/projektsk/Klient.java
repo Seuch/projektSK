@@ -13,31 +13,69 @@ import java.io.*;
  * @author seuch
  */
 public class Klient {
-    public static void main(String[] args) throws IOException{
-        String msgFromServer;
+    public static void main(String[] args) throws Exception{
         final int INDEX = 459313;
+        int x = 1;
+        int numberOfDomino = 0;
         
-        Socket client = new Socket("localhost", 6969);
-
-        DataOutputStream outToServer = new
-
-        DataOutputStream(client.getOutputStream());
-
-        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-        //outToServer.writeBytes(msg + '\n');
-
-        msgFromServer = inFromServer.readLine();
-
-        System.out.println(msgFromServer);
+        String ip_address = "localhost";
+        int port = 6868;
         
-        if(msgFromServer.equals("CONNECT") || msgFromServer.equals("CONNECT\n")) {
-            outToServer.writeBytes("LOGIN " + INDEX + "\n");
-        } else {
-        }
+        boolean connection = false;
+        String msgFromServer;
         
-        
+            try(Socket client = new Socket(ip_address, port))
+            {
+                connection = true;
+                PrintWriter outToServer = new PrintWriter(client.getOutputStream());
+                BufferedReader inFromServer = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                while(connection){
+                    msgFromServer = inFromServer.readLine();
 
-        client.close();
+                    //System.out.println(msgFromServer);
+                    //System.out.println(importantMsgFromServer);
+
+                        if(msgFromServer.equals("CONNECT") || msgFromServer.equals("CONNECT\n")) {
+                            System.out.println(msgFromServer);
+                            outToServer.print("LOGIN " + INDEX + "\n");
+                            outToServer.flush();
+                        }
+                        else if(msgFromServer.equals("YOUR CHOICE") || msgFromServer.equals("YOUR CHOICE\n") || msgFromServer.equals("ERROR"))
+                        {
+                            System.out.println(msgFromServer);
+                            if(numberOfDomino < 48){
+                                numberOfDomino++;
+                                outToServer.print("CHOOSE " + numberOfDomino + "\n");
+                                outToServer.flush();
+                            }
+                            else 
+                            {
+                                numberOfDomino = 1;
+                                outToServer.print("CHOOSE " + numberOfDomino + "\n");
+                                outToServer.flush();
+                            }
+                        }
+                        else if(msgFromServer.equals("YOUR MOVE") || msgFromServer.equals("YOUR MOVE\n"))
+                        {
+                            System.out.println(msgFromServer);
+                            outToServer.print("MOVE " + x + " 0 0\n");
+                            outToServer.flush();
+                            x += 2;
+                        }
+                        else if(msgFromServer.startsWith("GAME")){
+                            System.out.println(msgFromServer);
+                            connection = false;
+                        } 
+                        else{ System.out.println(msgFromServer);}
+            }
+            client.close();
+    }
+            
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            
+            
     }
 }

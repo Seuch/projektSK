@@ -14,15 +14,19 @@ import java.io.*;
  */
 public class Serwer {
     public static void main(String[] args) throws IOException{
-        ServerSocket serwer = new ServerSocket(6969);
-        Socket s = serwer.accept();
-        
-        PrintWriter pr = new PrintWriter(s.getOutputStream());
-        pr.println("CONNECT\n");
-        pr.flush();
-        
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        System.out.println(inFromClient.readLine());
+        final int port = 6868;
+        ServerSocket serwer = new ServerSocket(port);
+        Socket socket = null;
+            
+        while(true){
+            try{
+                socket = serwer.accept();
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            new ClientHandler(socket).start();
+        }
         
     }
 }
