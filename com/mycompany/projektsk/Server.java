@@ -12,7 +12,7 @@ import java.io.*;
  *
  * @author seuch
  */
-public class Serwer {
+public class Server {
     public static void main(String[] args) throws IOException{
         final int port = 6868;
         ServerSocket serwer = new ServerSocket(port);

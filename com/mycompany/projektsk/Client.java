@@ -12,7 +12,7 @@ import java.io.*;
  *
  * @author seuch
  */
-public class Klient {
+public class Client {
     public static void main(String[] args) throws Exception{
         final int INDEX = 459313;
         int x = 1;
