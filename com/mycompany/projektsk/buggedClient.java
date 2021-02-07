@@ -20,8 +20,8 @@ public class buggedClient {
         int z = 0;
         int numberOfDomino = 0;
         
-        String ip_address = "grasieci.adiantek.ovh";
-        int port = 8081;
+        String ip_address = "localhost";
+        int port = 6969;
         
         boolean connection = false;
         String msgFromServer;
